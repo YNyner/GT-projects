@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body id="index">
+  <div class="mainbox">
+    <h1>丛林游园大比“拼”</h1>
+    <div class="topbox">
+      <a href="./index.html">再次选择IP</a>
+      <span class="fr" id="timer">比“拼”时间：00:00:21</span>
+    </div>
+    <div class="grid-container">
+      <!-- <div class="grid-item c1"></div>
+      <div class="grid-item c2"></div>
+      <div class="grid-item c3"></div>
+      <div class="grid-item c4"></div>
+      <div class="grid-item c5"></div>
+      <div class="grid-item c6"></div>
+      <div class="grid-item c7"></div>
+      <div class="grid-item c8"></div>
+      <div class="grid-item c9"></div> -->
+    </div>
+  </div>
+  <div id="startbox">
+    <div class="content">
+      <p>挑选你的IP 准备游园咯</p>
+      <div class="fn-clear">
+        <div class="png fl"><img src="./images/1.jpg" pid="g1" alt=""></div>
+        <div class="png fl"><img src="./images/2.jpg" pid="g2" alt=""></div>
+        <div class="png fl"><img src="./images/3.jpg" pid="g3" alt=""></div>
+        <div class="png fl"><img src="./images/4.jpg" pid="g4" alt=""></div>
+        <div class="png fl"><img src="./images/5.jpg" pid="g5" alt=""></div>
+        <div class="png fl"><img src="./images/6.jpg" pid="g6" alt=""></div>
+      </div>
+      <a href="javascript:;" id="start">开启游园大比拼</a>
+    </div>
+  </div>
+  <script>
+    var stopstate = false;/* 游戏结束状态判断 */
+    var times = '';
+    /* 乱序函数(1-9) */
+    function shuffleNumbers () {
+      // Create an array with numbers 1 to 9
+      var numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+      // Shuffle the array
+      for (var i = numbers.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = numbers[i];
+        numbers[i] = numbers[j];
+        numbers[j] = temp;
+      }
+
+      // Return the shuffled array
+      return numbers;
+    }
+
+
+    /* 渲染拼图 */
+    function showlist () {
+      var shuffledArray = shuffleNumbers();
+      console.log(shuffledArray);
+      var html = '';
+      shuffledArray.forEach((ele) => {
+        html += `
+          <div class="grid-item c${ele}" uid="c${ele}"></div>
+        `
+      })
+      document.querySelector('.grid-container').innerHTML = html;
+      bindClick()
+
+    }
+    /* 绑定点击事件 */
+    function bindClick () {
+      // 获取所有的grid-item元素
+      var gridItems = document.getElementsByClassName('grid-item');
+
+      // 循环遍历每个grid-item元素
+      for (var i = 0; i < gridItems.length; i++) {
+        var gridItem = gridItems[i];
+
+        // 添加点击事件监听器
+        gridItem.addEventListener('click', function () {
+          // 检查是否存在类名sure
+          var hasSureClass = this.classList.contains('sure');
+          // 判断添加或移除类名sure
+          if (!hasSureClass) {
+            // 添加类名sure
+            this.classList.add('sure');
+          } else {
+            // 移除类名sure
+            this.classList.remove('sure');
+          }
+          // 判断是否存在2个带有sure类名的grid-item元素
+          if (document.getElementsByClassName('sure').length === 2) {
+            // 获取所有的grid-item元素
+            var gridItems = document.getElementsByClassName('grid-item');
+
+            // 获取具有sure类名的元素
+            var sureElements = document.getElementsByClassName('sure');
+
+            // 判断是否存在两个带有sure类名的元素
+            if (sureElements.length === 2) {
+              // 获取两个div元素
+              console.log(sureElements[0].getAttribute('uid'))
+              var firstIndex = sureElements[0].getAttribute('uid');
+              var secondIndex = sureElements[1].getAttribute('uid');
+
+              // 交换位置
+              sureElements[0].classList.remove(firstIndex);
+              sureElements[0].classList.add(secondIndex);
+              sureElements[1].classList.remove(secondIndex)
+              sureElements[1].classList.add(firstIndex)
+              sureElements[0].setAttribute('uid', secondIndex);
+              sureElements[1].setAttribute('uid', firstIndex);
+            }
+
+            // 移除类名sure
+            setTimeout(function () {
+              document.querySelectorAll('.grid-item').forEach((ele) => {
+                ele.classList.remove('sure');
+              })
+            }, 1000)
+          } else {
+
+          }
+          if (checkGridItemOrder() == true) {
+            setTimeout(function () {
+              stopstate = true;
+              alert('拼图完成,共计耗时：' + times)
+            }, 1000)
+          }
+        });
+      }
+
+
+    }
+    /* 编写验证方法是否拼图完成 */
+    function checkGridItemOrder () {
+      var gridContainer = document.querySelector('.grid-container');
+      var gridItems = gridContainer.getElementsByClassName('grid-item');
+      let list = []
+      for (var i = 0; i < gridItems.length; i++) {
+        var className = 'c' + (i + 1);
+
+        if (!gridItems[i].classList.contains(className)) {
+          list.push(false)
+          return false;
+        } else {
+          list.push(true)
+        }
+      }
+      console.log(list)
+
+      return true;
+    }
+
+    /* 点击开始游戏 */
+    document.querySelector('#start').addEventListener('click', function () {
+
+      var imageUrl = document.querySelector('#startbox .png.active img');
+      console.log(imageUrl)
+      if (imageUrl) {
+        var pid = imageUrl.getAttribute('pid');
+        document.querySelector('.grid-container').classList.add(pid);
+        showlist()
+        document.querySelector('#startbox').style.display = 'none';
+        startTimer()
+      } else {
+        alert('请选择图片')
+      }
+
+    })
+
+    /* 选择图片开始拼图游戏 */
+    document.querySelectorAll('#startbox .png').forEach((ele, i) => {
+      ele.addEventListener('click', function () {
+        document.querySelectorAll('#startbox .png').forEach((dom, m) => {
+          dom.classList.remove('active')
+        })
+        ele.classList.add('active')
+
+      })
+    })
+    /* 游戏计时 */
+    function startTimer () {
+      let seconds = 0;
+      let minutes = 0;
+      let hours = 0;
+
+      function updateTimer () {
+        if (stopstate == false) {
+          /* 没结束才启动计时器 */
+          seconds++;
+          if (seconds == 60) {
+            seconds = 0;
+            minutes++;
+            if (minutes == 60) {
+              minutes = 0;
+              hours++;
+            }
+          }
+
+          const timerElement = document.getElementById("timer");
+          times = formatTime(hours) + ":" + formatTime(minutes) + ":" + formatTime(seconds);
+          timerElement.textContent = '游戏时间：' + times
+        }
+
+      }
+
+      function formatTime (time) {
+        return time < 10 ? "0" + time : time;
+      }
+
+      setInterval(updateTimer, 1000);
+    }
+  </script>
+</body>
+
+</html>

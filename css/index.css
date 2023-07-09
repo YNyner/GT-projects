@@ -1,0 +1,196 @@
+#index {
+  background: transparent url('../images/bjt.png') no-repeat top fixed;
+  background-size: cover;
+  padding-top: 60px;
+}
+.topbox {
+  position: relative;
+}
+.topbox #timer {
+  position: absolute;
+  right: 30px;
+  top: 10px;
+  color: #73331c;
+  font-size: 18px;
+  line-height: 40px;
+}
+.topbox a {
+  display: block;
+  margin: auto;
+  background-size: cover;
+  width: 171px;
+  height: 46px;
+  line-height: 46px;
+  font-weight: bold;
+  color: #73331c;
+}
+/* 单个九宫格元素 */
+.mainbox {
+  margin: 30px auto 0 auto;
+  background-color: #fff;
+  background-size: cover;
+  width: 1193px;
+  height: 1173px;
+}
+.mainbox h1 {
+  background-size: contain;
+  text-align: center;
+  font-size: 60px;
+  font-weight: bold;
+  color: #73331c;
+  line-height: 120px;
+}
+/* 九宫格容器 */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 15px;
+  width: 750px;
+  margin: 0 auto 0 auto;
+  padding-top: 30px;
+}
+/* 设置不同图片 */
+.grid-container.g1 .grid-item {
+  background-image: url('../images/1.jpg');
+}
+.grid-container.g2 .grid-item {
+  background-image: url('../images/2.jpg');
+}
+.grid-container.g3 .grid-item {
+  background-image: url('../images/3.jpg');
+}
+.grid-container.g4 .grid-item {
+  background-image: url('../images/4.jpg');
+}
+.grid-container.g5 .grid-item {
+  background-image: url('../images/5.jpg');
+}
+.grid-container.g6 .grid-item {
+  background-image: url('../images/6.jpg');
+}
+.grid-item {
+  width: 250px;
+  height: 250px;
+  background-size: 750px 750px !important;
+  transition: all 0.6s;
+  position: relative;
+  border-radius: 10px;
+  border: 4px solid #fff;
+}
+.result {
+  position: fixed;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.result img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.result.show {
+  display: block;
+  opacity: 1;
+  width: 750px;
+  height: 750px;
+}
+.grid-container .grid-item.sure {
+  box-shadow: 0px 4px 14px #73331c;
+}
+.grid-container .grid-item.c1 {
+  background-position: 0px 0px;
+}
+.grid-container .grid-item.c2 {
+  background-position: -250px 0px;
+}
+.grid-container .grid-item.c3 {
+  background-position: -500px 0px;
+}
+.grid-container .grid-item.c4 {
+  background-position: 0px -250px;
+}
+.grid-container .grid-item.c5 {
+  background-position: -250px -250px;
+}
+.grid-container .grid-item.c6 {
+  background-position: -500px -250px;
+}
+.grid-container .grid-item.c7 {
+  background-position: 0px -500px;
+}
+.grid-container .grid-item.c8 {
+  background-position: -250px -500px;
+}
+.grid-container .grid-item.c9 {
+  background-position: -500px -500px;
+}
+/* 开始游戏 */
+#startbox {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+#startbox .content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 200px 120px 0 120px;
+  background-color: darkorange;
+  width: 700px;
+  height: 700px;
+}
+#startbox .content p {
+  color: #333;
+  line-height: 90px;
+  font-size: 24px;
+  padding-top: 70px;
+}
+#startbox .content .fn-clear {
+  width: 500px;
+  margin: auto;
+}
+#startbox .content .fn-clear .png {
+  width: 140px;
+  height: 140px;
+  margin: 10px;
+  overflow: hidden;
+  transition: all 0.6s;
+}
+#startbox .content .fn-clear .png img {
+  width: 140px;
+  height: 140px;
+  display: block;
+  transition: all 0.6s;
+}
+#startbox .content .fn-clear .png:hover img {
+  transform: scale(1.2);
+}
+#startbox .content .fn-clear .png.active {
+  box-shadow: 0px 0px 4px #73331c;
+  border-radius: 10px;
+  border: 4px solid #fff;
+  box-sizing: border-box;
+}
+#startbox .content .fn-clear .png.active img {
+  transform: scale(1.2);
+}
+#startbox .content #start {
+  display: block;
+  margin: 60px auto;
+  background-color: black;
+  background-size: cover;
+  width: 200px;
+  height: 50px;
+  line-height: 46px;
+  font-weight: bold;
+  color: #f4edeb;
+}
